@@ -1,7 +1,4 @@
-version: '3.8'
-
 services:
-  # --- Banco de dados compartilhado ---
   postgres:
     image: postgres:16
     container_name: postgres-db
@@ -15,7 +12,6 @@ services:
     ports:
       - "5432:5432"
 
-  # --- CMS Strapi (Backend) ---
   strapi:
     image: strapi/strapi
     container_name: strapi-app
@@ -38,7 +34,6 @@ services:
     ports:
       - "1337:1337"
 
-  # --- Automação n8n ---
   n8n:
     image: n8nio/n8n:latest
     container_name: n8n-app
@@ -62,18 +57,3 @@ services:
       - "5678:5678"
     volumes:
       - ./n8n_data:/home/node/.n8n
-
-  # --- LM Studio local API ---
-  lmstudio:
-    image: ghcr.io/lmstudio-ai/lmstudio:latest
-    container_name: lmstudio
-    restart: unless-stopped
-    ports:
-      - "1234:1234"
-    volumes:
-      - ./lmstudio:/data
-    command: >
-      lmstudio serve
-      --model "openai/gpt-oss-20b"
-      --api-port 1234
-      --host 0.0.0.0
