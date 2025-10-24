@@ -62,3 +62,18 @@ services:
       - "5678:5678"
     volumes:
       - ./n8n_data:/home/node/.n8n
+
+  # --- LM Studio local API ---
+  lmstudio:
+    image: ghcr.io/lmstudio-ai/lmstudio:latest
+    container_name: lmstudio
+    restart: unless-stopped
+    ports:
+      - "1234:1234"
+    volumes:
+      - ./lmstudio:/data
+    command: >
+      lmstudio serve
+      --model "openai/gpt-oss-20b"
+      --api-port 1234
+      --host 0.0.0.0
